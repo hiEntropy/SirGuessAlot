@@ -1,0 +1,1 @@
+{"min_password_len":8,"max_password_len":30,"specials":"allowed","specials_set":"#$%^","numbers":"allowed","lowers":"allowed","cap_required":"req"}

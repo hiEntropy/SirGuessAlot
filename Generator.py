@@ -28,10 +28,12 @@ def load_topologies(amount, config):
 '''
 takes a part of the sequence and the an array of profile data
 '''
-def make_password_guesses(topology,organized_profile):
-    sequence = get_segments(topology.flat_topology)
+def make_password_guesses(topology_obj, organized_profile):
+    sequence = get_segments(topology_obj.flat_topology)
     #first prime the list
     combo_list = []
+    if not( sequence[0].count in organized_profile.keys()):
+        return None
     for x in organized_profile[sequence[0].count]:
         if Utilities.match_type(sequence[0].type_,x):
             combo_list.append(x)
@@ -39,10 +41,11 @@ def make_password_guesses(topology,organized_profile):
     holder = []
     for x in sequence[1:]:
         for z in combo_list:
-            for y in organized_profile[y.count]:
-                if Utilities.match_type(x.type,y):
-                  holder.append(z+y)
-        combo_list = holder
+            for y in organized_profile[x.count]:
+                if Utilities.match_type(x.type_,y):
+                    holder.append(z+y)
+        combo_list.clear()
+        combo_list.extend(holder)
         holder.clear()
     return combo_list
 

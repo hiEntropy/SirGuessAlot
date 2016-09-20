@@ -3,6 +3,12 @@ import Topology
 import Segment
 
 '''
+get_topologies
+
+file is a file path to the mongodb credentials
+amount is the minimum count number a topology must have in order to be
+included in the search results
+
 returns topologies but in an unordered fashion
 '''
 def get_topologies(file, amount):
@@ -12,7 +18,19 @@ def get_topologies(file, amount):
     return collection.find({"count": {"$gte": amount}})
 
 '''
-call this function to get topologies sorted by count
+load_topologies
+
+amount is the minimum count number a topology must have in order to be
+included in the search result
+
+config is a file that describes the acceptable password topologies with
+discriptors for min/max length, and what character types are allowed
+
+call this function to get topologies sorted by count and eligibility.
+eligibility should be determined by the application that you are attempting
+to brute force. These requirements help us narrow the space a little
+
+returns a sorted list of topologies
 '''
 def load_topologies(amount, config):
     results = get_topologies("mongo_creds.json", amount)
@@ -26,6 +44,10 @@ def load_topologies(amount, config):
 
 
 '''
+make_passowrd_guesses
+
+
+
 takes a part of the sequence and the an array of profile data
 '''
 def make_password_guesses(topology_obj, organized_profile):

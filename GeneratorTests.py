@@ -8,6 +8,7 @@ class MyTestCase(unittest.TestCase):
     file = "mongo_creds.json"
     profile = "TestFiles/profile.json"
     test_config = "TestFiles/test_config.json"
+    leet = "leet_speak.json"
     config = "config.json"
 
     def _get_topologies(self):
@@ -71,6 +72,19 @@ class MyTestCase(unittest.TestCase):
 
     def test_gen_passwords(self):
         pass
+
+    def test_only_eligible_chars(self):
+        test_str = "#$%^345#f"
+        config = Utilities.get_JSON_Obj(self.config)
+        self.assertTrue(Generator.only_eligible_char(test_str,config))
+        test_str = "(asdfasdf"
+        self.assertFalse(Generator.only_eligible_char(test_str,config))
+    def test_sub_vowels(self):
+        leet = Utilities.get_JSON_Obj(self.leet)
+        config = Utilities.get_JSON_Obj(self.test_config)
+        combos = Generator.sub_vowels('john',leet,config)
+        self.assertTrue('j0hn' in combos)
+
 
 
 if __name__ == '__main__':
